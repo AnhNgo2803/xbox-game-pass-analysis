@@ -9569,11 +9569,11 @@ author: Anh Ngo Le Duy
 </script>
 
 <script>
-  // read YAML
+  // đọc YAML
   const yamlText = document.getElementById("yaml-data").textContent;
   const data = jsyaml.load(yamlText);
 
-  // render HTML 
+  // render HTML (thêm vào cuối body)
   document.body.innerHTML += `
     <section style="margin-top:2rem; font-family:Arial; text-align:center;">
       <h1>${data.title}</h1>
