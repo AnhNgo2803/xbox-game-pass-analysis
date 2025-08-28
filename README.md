@@ -24,7 +24,7 @@ For **detailed executive summary and code**, refer to the [Jupyter Notebook](Xbo
 
 ## Tools and Libraries
 
-- Python 3.8+
+- Python 3.11
 - Libraries:
   - pandas
   - numpy
@@ -54,7 +54,6 @@ Clone the repository and install required libraries using the requirements.txt f
   - Mainstream (hard-long): Balanced but focused on Action/Compilation.
 - **Insights**: Popularity correlates with engagement depth or accessibility, not completion rates. Recommendations: Prioritize multiplayer/narrative for loyalty (MMO/RPG) and creativity/freedom for broad appeal (Sandbox).
 
-Example visualizations 
 
 ## Contributing
 
