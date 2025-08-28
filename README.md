@@ -18,7 +18,7 @@ For **detailed executive summary and code**, refer to the [Jupyter Notebook](Xbo
 
 ## Data
 
-- **Source**: 'Enhanced_Gamepass_Games_v2' dataset from Kaggle (published by Rohan). Original dataset not included in the repo due to size; download from [Kaggle](https://www.kaggle.com/datasets/rohanchopdekar/enhanced-gamepass-games-v2).
+- **Source**: 'Enhanced_Gamepass_Games_v2' dataset from Kaggle (published by Rohan). Original dataset is included in the repo; or you can download from [Rohan - Kaggle]([https://www.kaggle.com/datasets/rohanchopdekar/enhanced-gamepass-games-v2](https://www.kaggle.com/datasets/vines666/enhanced-xbox-game-pass-genres)).
 - **Structure**: Columns include GAME, RATIO (difficulty), GAMERS, COMP % (completion rate), TIME (playtime), RATING, GENRES, and more.
 - **Note**: Processed data is handled in the notebook; no raw data is uploaded here.
 
