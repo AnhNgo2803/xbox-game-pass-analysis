@@ -181,14 +181,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="cdfbe7a5" class="cell" data-execution_count="2">
+<div id="7a339816" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the dataset</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>game <span class="op">=</span> pd.read_csv(<span class="st">'Enhanced_Gamepass_Games_v2.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="55e2317c" class="cell" data-execution_count="3">
+<div id="d54eb2e6" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># briefly inspect structure</span></span>
@@ -219,7 +219,7 @@ dtypes: float64(2), int64(2), object(11)
 memory usage: 53.4+ KB</code></pre>
 </div>
 </div>
-<div id="8a8eeec8" class="cell" data-execution_count="4">
+<div id="48af29c7" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect data in first rows of data set</span></span>
@@ -352,7 +352,7 @@ memory usage: 53.4+ KB</code></pre>
 <h2 data-number="3.2" class="anchored" data-anchor-id="data-manipulation"><span class="header-section-number">3.2</span> Data manipulation</h2>
 <p>Through data structure and its corresponding values, there are variables that need to be adjusted to correct formats.</p>
 <p><strong>Deal with categorical data</strong></p>
-<div id="ab4db812" class="cell" data-execution_count="5">
+<div id="fff9d8a9" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change data type to categorical data</span></span>
@@ -373,7 +373,7 @@ name_genre_match    category
 dtype: object</code></pre>
 </div>
 </div>
-<div id="97b9f497" class="cell" data-execution_count="6">
+<div id="69c840dd" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># since the ratio column realize '-' in values, I inspect and remove it before changing data type</span></span>
@@ -389,7 +389,7 @@ dtype: object</code></pre>
 Name: RATIO, dtype: int64</code></pre>
 </div>
 </div>
-<div id="5b2ba7f4" class="cell" data-execution_count="7">
+<div id="7380e51e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RATIO colum</span></span>
@@ -408,7 +408,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p><strong>Deal with Time data (from categorical to number)</strong></p>
-<div id="194bd01c" class="cell" data-execution_count="8">
+<div id="8944b4fd" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect the values in time column</span></span>
@@ -447,7 +447,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>For easier for analysis later, I added a column that take the mean of time frames in time column, except the “1000+ hours” data, which will be maintained as 1000.</p>
-<div id="f9bfce5c" class="cell" data-execution_count="9">
+<div id="6453756d" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the words "hours" in new column</span></span>
@@ -488,7 +488,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p><strong>Deal with Na values</strong></p>
-<div id="8512069e" class="cell" data-execution_count="10">
+<div id="dab5d088" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect Na in each column</span></span>
@@ -517,7 +517,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>Even though fourth and third genre column have the most na values among other variables, I did not process those variables, instead, I chose to eliminate these colomns since it’s not highly essential for the analysis target.</p>
-<div id="f0d65447" class="cell" data-execution_count="11">
+<div id="f0fee400" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove fourth and third genre column</span></span>
@@ -529,7 +529,7 @@ dtype: int64</code></pre>
 <li>With categorical data such as <code>TIME</code>, <code>second_genre</code>, <code>GENRES</code>, <code>Main_Genre</code>, <code>name_genre_match</code>, and <code>ADDED</code> (Time data), I used <em>mode</em> method to fill those Na values</li>
 <li>With continuos data such as <code>RATIO</code>, <code>RATING</code>, and <code>time_num</code>, I used <em>mean</em> method to fill those values.</li>
 </ul>
-<div id="95152ad9" class="cell" data-execution_count="12">
+<div id="43685d5c" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fill Na values of categorical and text data</span></span>
@@ -541,7 +541,7 @@ dtype: int64</code></pre>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    game_new[col] <span class="op">=</span> game_new[col].fillna(mode_val)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="bb40838c" class="cell" data-execution_count="13">
+<div id="74d2c4ba" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fill Na values of numeric data</span></span>
@@ -553,7 +553,7 @@ dtype: int64</code></pre>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    game_new[col] <span class="op">=</span> game_new[col].fillna(mean_val)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="83e4383a" class="cell" data-execution_count="14">
+<div id="2bbde973" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check Na again</span></span>
@@ -584,13 +584,13 @@ dtype: int64</code></pre>
 <section id="genre-analysis" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Genre analysis</h1>
 <p>In this section, I want to determine what are genres that gamers prefer most compared to the others. From that, finding features of those popular games to have a transparent model about a successful game, which enhances developing strategies for game developers in Xbox pass product.</p>
-<div id="eef3bbdf" class="cell" data-execution_count="15">
+<div id="c09cb01b" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>game_new.info() <span class="co"># recall the structure and columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="57c12e35" class="cell" data-execution_count="16">
+<div id="1add3245" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>genre_ana <span class="op">=</span> game_new.groupby(<span class="st">'Main_Genre'</span>, observed<span class="op">=</span><span class="va">True</span>).agg(</span>
@@ -676,14 +676,14 @@ dtype: int64</code></pre>
 <section id="difficulty-and-playtime-analysis" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Difficulty and Playtime Analysis</h1>
 <p>In this part, I want to focus on the gaming experience of gamers, particularly in the achievement difficulty of genres compared to true score from players. Therefore, I used <code>RATIO</code> and <code>time_num</code> columns to inspect this problem.</p>
-<div id="0d807952" class="cell" data-execution_count="19">
+<div id="c56bfed9" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># recall the data information</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>game_new.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="c7274755" class="cell" data-execution_count="20">
+<div id="b68e697e" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">5</span>))</span>
@@ -708,7 +708,7 @@ dtype: int64</code></pre>
 <section id="apply-k-means-clusterring-for-better-classification" class="level3" data-number="5.0.1">
 <h3 data-number="5.0.1" class="anchored" data-anchor-id="apply-k-means-clusterring-for-better-classification"><span class="header-section-number">5.0.1</span> Apply K-means clusterring for better classification</h3>
 <p>From the scatter plot, it can be seen that games may be divided into clusters with different features, instead of having a linear relationship. However, common observation is objective, which is consequently essential to have an unsupervised machine learning, k-means clustering. The final target is to determine whether the model can classify these clusters as innitally predicted or not.</p>
-<div id="bb2c744b" class="cell" data-execution_count="21">
+<div id="f0da3aad" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import model </span></span>
@@ -716,7 +716,7 @@ dtype: int64</code></pre>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="850c0472" class="cell" data-execution_count="22">
+<div id="03cd4707" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract and standardize variables for model</span></span>
@@ -729,7 +729,7 @@ dtype: int64</code></pre>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div id="ed032c09" class="cell" data-execution_count="23">
+<div id="8434532f" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run k-means model with cross validation</span></span>
@@ -759,7 +759,7 @@ dtype: int64</code></pre>
 </div>
 <p><strong>Optimal km mean cluster</strong></p>
 <p>From the plot above, k cluster at point 4 shows the kink of error. Following the “elbow method”, I choose 4 as an optimal k cluster for the model.</p>
-<div id="4a263fbb" class="cell" data-execution_count="24">
+<div id="ab98d8fe" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run again the model</span></span>
@@ -795,7 +795,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="07d9e421" class="cell" data-execution_count="26">
+<div id="1ee3f070" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the mean of RATIO and time_num by clusters</span></span>
@@ -862,7 +862,7 @@ dtype: int64</code></pre>
 <section id="extended-problem" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="extended-problem"><span class="header-section-number">5.1</span> Extended problem</h2>
 <p>From the genre analysis and this result, I have raised a question that even though players in Xbox game pass prefer high-engagement and mass appeal gameplays, what genres do gamers prefer to play within these 4 features?</p>
-<div id="39f47ed3" class="cell" data-execution_count="27">
+<div id="75dc4074" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the cluster into the game_new df</span></span>
@@ -984,7 +984,7 @@ dtype: int64</code></pre>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>rank_plot(<span class="st">'Epic (hard-very long)'</span>)</span>
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>rank_plot(<span class="st">'Mainstream (hard-long)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div id="using-func-to-plot-data" class="cell quarto-layout-panel" data-fig-width="12" data-fig-height="4" data-fig-dpi="200" data-execution_count="33" data-layout-ncol="2">
+<div id="using-func-to-plot-data" class="cell quarto-layout-panel" data-fig-width="12" data-fig-height="4" data-execution_count="33" data-layout-ncol="2" data-fig-dpi="200">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
