@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Le Duy Anh Ngo">
+
+<title>Xbox Game Pass Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="Xbox Game Project - Portfolio_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Xbox Game Project - Portfolio_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Xbox Game Project - Portfolio_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Xbox Game Project - Portfolio_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Xbox Game Project - Portfolio_files/libs/quarto-html/popper.min.js"></script>
+<script src="Xbox Game Project - Portfolio_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Xbox Game Project - Portfolio_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Xbox Game Project - Portfolio_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Xbox Game Project - Portfolio_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Xbox Game Project - Portfolio_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Xbox Game Project - Portfolio_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Xbox Game Project - Portfolio_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#excutive-summary" id="toc-excutive-summary" class="nav-link active" data-scroll-target="#excutive-summary"><span class="header-section-number">1</span> Excutive summary</a></li>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement"><span class="header-section-number">2</span> Problem statement</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">3</span> Data preparation</a>
+  <ul class="collapse">
+  <li><a href="#data-inspection" id="toc-data-inspection" class="nav-link" data-scroll-target="#data-inspection"><span class="header-section-number">3.1</span> Data inspection</a></li>
+  <li><a href="#data-manipulation" id="toc-data-manipulation" class="nav-link" data-scroll-target="#data-manipulation"><span class="header-section-number">3.2</span> Data manipulation</a></li>
+  </ul></li>
+  <li><a href="#genre-analysis" id="toc-genre-analysis" class="nav-link" data-scroll-target="#genre-analysis"><span class="header-section-number">4</span> Genre analysis</a>
+  <ul class="collapse">
+  <li><a href="#initial-analysis" id="toc-initial-analysis" class="nav-link" data-scroll-target="#initial-analysis"><span class="header-section-number">4.0.1</span> Initial analysis</a></li>
+  <li><a href="#insight" id="toc-insight" class="nav-link" data-scroll-target="#insight"><span class="header-section-number">4.0.2</span> Insight</a></li>
+  </ul></li>
+  <li><a href="#difficulty-and-playtime-analysis" id="toc-difficulty-and-playtime-analysis" class="nav-link" data-scroll-target="#difficulty-and-playtime-analysis"><span class="header-section-number">5</span> Difficulty and Playtime Analysis</a>
+  <ul class="collapse">
+  <li><a href="#apply-k-means-clusterring-for-better-classification" id="toc-apply-k-means-clusterring-for-better-classification" class="nav-link" data-scroll-target="#apply-k-means-clusterring-for-better-classification"><span class="header-section-number">5.0.1</span> Apply K-means clusterring for better classification</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="header-section-number">5.0.2</span> Analysis</a></li>
+  <li><a href="#extended-problem" id="toc-extended-problem" class="nav-link" data-scroll-target="#extended-problem"><span class="header-section-number">5.1</span> Extended problem</a></li>
+  <li><a href="#insight-1" id="toc-insight-1" class="nav-link" data-scroll-target="#insight-1"><span class="header-section-number">5.2</span> Insight</a>
+  <ul class="collapse">
+  <li><a href="#group-casual-easy---short-playtime-demand-remains-unmet" id="toc-group-casual-easy---short-playtime-demand-remains-unmet" class="nav-link" data-scroll-target="#group-casual-easy---short-playtime-demand-remains-unmet"><span class="header-section-number">5.2.1</span> Group: Casual (Easy - Short playtime): Demand remains unmet</a></li>
+  <li><a href="#group-challenge-very-hard---short-playtime-balanced-but-some-waste." id="toc-group-challenge-very-hard---short-playtime-balanced-but-some-waste." class="nav-link" data-scroll-target="#group-challenge-very-hard---short-playtime-balanced-but-some-waste."><span class="header-section-number">5.2.2</span> Group: Challenge (Very Hard - Short playtime): Balanced, but some waste.</a></li>
+  <li><a href="#group-epic-hard---very-long-playtime-a-potential-opportunity-is-missing" id="toc-group-epic-hard---very-long-playtime-a-potential-opportunity-is-missing" class="nav-link" data-scroll-target="#group-epic-hard---very-long-playtime-a-potential-opportunity-is-missing"><span class="header-section-number">5.2.3</span> Group: Epic (Hard - Very long playtime): A potential opportunity is missing</a></li>
+  <li><a href="#group-mainstream-hard---long-playtime-optimizing-portfolio-is-essential" id="toc-group-mainstream-hard---long-playtime-optimizing-portfolio-is-essential" class="nav-link" data-scroll-target="#group-mainstream-hard---long-playtime-optimizing-portfolio-is-essential"><span class="header-section-number">5.2.4</span> Group: Mainstream (Hard - Long playtime): Optimizing portfolio is essential</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#recommendation" id="toc-recommendation" class="nav-link" data-scroll-target="#recommendation"><span class="header-section-number">6.1</span> Recommendation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Xbox Game Pass Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Le Duy Anh Ngo </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Gaming%20Adventure%20in%20Vibrant%20Colours.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p><strong>My Github</strong>: <a href="https://github.com/AnhNgo2803">AnhNgo2803</a></p>
+<p><strong>Learn more</strong>: <a href="">Insight Dashboard</a>, <a href="https://github.com/AnhNgo2803/xbox-game-pass-analysis">Github Repository</a></p>
+<p><strong>Data Source</strong>: <a href="https://www.kaggle.com/datasets/vines666/enhanced-xbox-game-pass-genres">Enhanced_Gamepass_Games_v2</a></p>
+<section id="excutive-summary" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Excutive summary</h1>
+<ul>
+<li><p>This data analysis project examines the Xbox Game Pass dataset (‘Enhanced_Gamepass_Games_v2’ from Kaggle), comprising 455 games, to uncover factors influencing game popularity, completion rates, and ratings. The objective is to deliver actionable insights for game developers, enabling them to enhance user experiences and optimize gameplay strategies on the platform.</p></li>
+<li><p>Utilizing Python libraries such as Pandas, NumPy, Seaborn, Matplotlib, and Scikit-learn, the analysis began with comprehensive data preparation: inspecting structures, handling missing values (using mode for categorical and mean for numerical data), converting formats (e.g., time ranges to numerical averages), and dropping non-essential columns. Exploratory data analysis focused on genre preferences, revealing Sandbox, Compilation, and MMO as the most popular genres based on average gamers (247,504; 181,648; and 133,438 respectively). Visualization techniques, including bar charts and bubble plots, highlighted two success models: High-Engagement (long playtimes in MMO and Compilation, fostering deep immersion and community) and Mass-Appeal (short, creative experiences in Sandbox, attracting broad audiences).</p></li>
+<li><p>Further, K-means clustering on difficulty ratio and playtime classified games into four distinct types: Casual (easy-short), Epic (hard-very long), Challenge (very hard-short), and Mainstream (hard-long). Cross-tabulation and stacked bar charts showed Casual dominating with diverse genres like Action and Adventure, while Epic offers untapped potential with high gamer averages but limited variety. Key insights indicate that popularity stems from engagement depth or accessibility rather than completion rates. Recommendations include prioritizing multiplayer features and narrative depth for loyal communities (e.g., MMO/RPG), while emphasizing creativity and freedom for mass appeal (e.g., Sandbox). This approach can guide Xbox developers in resource allocation, genre diversification, and user-centric design, ultimately boosting retention and acquisition.</p></li>
+<li><p>Skills demonstrated: Data cleaning, statistical analysis, visualization, unsupervised machine learning, and insight derivation for business impact.</p></li>
+</ul>
+</section>
+<section id="problem-statement" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Problem statement</h1>
+<p>The goal of this project is to analyze the dataset for uncovering factors that affect the popularity, completion rate, and ratings of games. As a result, provide useful insights for game developers to optimize gaming experience.</p>
+</section>
+<section id="data-preparation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data preparation</h1>
+<section id="data-inspection" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="data-inspection"><span class="header-section-number">3.1</span> Data inspection</h2>
+<div id="library-import" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import essential library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cdfbe7a5" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>game <span class="op">=</span> pd.read_csv(<span class="st">'Enhanced_Gamepass_Games_v2.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="55e2317c" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># briefly inspect structure</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>game.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 455 entries, 0 to 454
+Data columns (total 15 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   GAME              455 non-null    object 
+ 1   RATIO             455 non-null    object 
+ 2   GAMERS            455 non-null    object 
+ 3   COMP %            455 non-null    float64
+ 4   TIME              421 non-null    object 
+ 5   RATING            452 non-null    float64
+ 6   ADDED             454 non-null    object 
+ 7   True_Achievement  455 non-null    int64  
+ 8   Game_Score        455 non-null    int64  
+ 9   GENRES            453 non-null    object 
+ 10  Main_Genre        453 non-null    object 
+ 11  second_genre      452 non-null    object 
+ 12  third_genre       350 non-null    object 
+ 13  fourth_genre      5 non-null      object 
+ 14  name_genre_match  453 non-null    object 
+dtypes: float64(2), int64(2), object(11)
+memory usage: 53.4+ KB</code></pre>
+</div>
+</div>
+<div id="8a8eeec8" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect data in first rows of data set</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>game.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">GAME</th>
+<th data-quarto-table-cell-role="th">RATIO</th>
+<th data-quarto-table-cell-role="th">GAMERS</th>
+<th data-quarto-table-cell-role="th">COMP %</th>
+<th data-quarto-table-cell-role="th">TIME</th>
+<th data-quarto-table-cell-role="th">RATING</th>
+<th data-quarto-table-cell-role="th">ADDED</th>
+<th data-quarto-table-cell-role="th">True_Achievement</th>
+<th data-quarto-table-cell-role="th">Game_Score</th>
+<th data-quarto-table-cell-role="th">GENRES</th>
+<th data-quarto-table-cell-role="th">Main_Genre</th>
+<th data-quarto-table-cell-role="th">second_genre</th>
+<th data-quarto-table-cell-role="th">third_genre</th>
+<th data-quarto-table-cell-role="th">fourth_genre</th>
+<th data-quarto-table-cell-role="th">name_genre_match</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Mass Effect Legendary Edition</td>
+<td>1.87</td>
+<td>84,143</td>
+<td>4.1</td>
+<td>100-120 hours</td>
+<td>4.8</td>
+<td>06 Jan 22</td>
+<td>5442</td>
+<td>2915</td>
+<td>Action, RPG, Third-Person Shooter</td>
+<td>Action</td>
+<td>RPG</td>
+<td>Third-Person Shooter</td>
+<td>NaN</td>
+<td>Mass Effect Legendary Edition</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>The Elder Scrolls V: Skyrim Special Edition</td>
+<td>1.97</td>
+<td>213,257</td>
+<td>8.0</td>
+<td>80-100 hours</td>
+<td>4.7</td>
+<td>15 Dec 20</td>
+<td>3055</td>
+<td>1550</td>
+<td>RPG, Action, Adventure, Open World</td>
+<td>RPG</td>
+<td>Action</td>
+<td>Adventure</td>
+<td>Open World</td>
+<td>The Elder Scrolls V: Skyrim Special Edition</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Mass Effect 2</td>
+<td>1.34</td>
+<td>221,178</td>
+<td>9.6</td>
+<td>50-60 hours</td>
+<td>4.7</td>
+<td>09 Nov 20</td>
+<td>1819</td>
+<td>1355</td>
+<td>Action, RPG, Third-Person Shooter</td>
+<td>Action</td>
+<td>RPG</td>
+<td>Third-Person Shooter</td>
+<td>NaN</td>
+<td>Mass Effect 2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Stardew Valley</td>
+<td>3.04</td>
+<td>51,530</td>
+<td>1.0</td>
+<td>150-200 hours</td>
+<td>4.7</td>
+<td>02 Dec 21</td>
+<td>3036</td>
+<td>1000</td>
+<td>Simulation, RPG, Indie, Farming Sim</td>
+<td>Simulation</td>
+<td>RPG</td>
+<td>Indie</td>
+<td>Farming Sim</td>
+<td>Stardew Valley</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>It Takes Two</td>
+<td>1.68</td>
+<td>71,981</td>
+<td>15.6</td>
+<td>12-15 hours</td>
+<td>4.7</td>
+<td>03 Nov 21</td>
+<td>1678</td>
+<td>1000</td>
+<td>Action, Adventure, Platformer, Co-op</td>
+<td>Action</td>
+<td>Adventure</td>
+<td>Platformer</td>
+<td>Co-op</td>
+<td>It Takes Two</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="data-manipulation" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="data-manipulation"><span class="header-section-number">3.2</span> Data manipulation</h2>
+<p>Through data structure and its corresponding values, there are variables that need to be adjusted to correct formats.</p>
+<p><strong>Deal with categorical data</strong></p>
+<div id="ab4db812" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change data type to categorical data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>game_new <span class="op">=</span> game.copy() <span class="co"># create a copy of original data</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>game_new[[<span class="st">'GAME'</span>,<span class="st">'Main_Genre'</span>,<span class="st">'second_genre'</span>,<span class="st">'third_genre'</span>,<span class="st">'fourth_genre'</span>,<span class="st">'name_genre_match'</span>]] <span class="op">=</span> game_new[</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'GAME'</span>,<span class="st">'Main_Genre'</span>,<span class="st">'second_genre'</span>,<span class="st">'third_genre'</span>,<span class="st">'fourth_genre'</span>,<span class="st">'name_genre_match'</span>]].astype(<span class="st">'category'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>game_new[[<span class="st">'GAME'</span>,<span class="st">'Main_Genre'</span>,<span class="st">'second_genre'</span>,<span class="st">'third_genre'</span>,<span class="st">'fourth_genre'</span>,<span class="st">'name_genre_match'</span>]].dtypes <span class="co"># check again</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>GAME                category
+Main_Genre          category
+second_genre        category
+third_genre         category
+fourth_genre        category
+name_genre_match    category
+dtype: object</code></pre>
+</div>
+</div>
+<div id="97b9f497" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># since the ratio column realize '-' in values, I inspect and remove it before changing data type</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>game_new.groupby(<span class="st">'RATIO'</span>)[<span class="st">'RATIO'</span>].agg(<span class="st">'count'</span>).head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>RATIO
+-       3
+1.04    1
+1.06    1
+1.1     1
+1.13    1
+Name: RATIO, dtype: int64</code></pre>
+</div>
+</div>
+<div id="5b2ba7f4" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RATIO colum</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>game_new[<span class="st">'RATIO'</span>] <span class="op">=</span> game_new[<span class="st">'RATIO'</span>].replace(<span class="st">'-'</span>,np.nan).astype(<span class="st">'float64'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># GAMERS column</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>game_new[<span class="st">'GAMERS'</span>] <span class="op">=</span> game_new[<span class="st">'GAMERS'</span>].<span class="bu">str</span>.replace(<span class="st">','</span>,<span class="st">''</span>).astype(<span class="st">'int64'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check result</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>game_new[[<span class="st">'GAMERS'</span>,<span class="st">'RATIO'</span>]].dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>GAMERS      int64
+RATIO     float64
+dtype: object</code></pre>
+</div>
+</div>
+<p><strong>Deal with Time data (from categorical to number)</strong></p>
+<div id="194bd01c" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect the values in time column</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>game_new.groupby(<span class="st">'TIME'</span>)[<span class="st">'TIME'</span>].value_counts(dropna<span class="op">=</span> <span class="va">False</span>) <span class="co"># Na included</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>TIME
+0-0.5 hours       1
+0.5-1 hour        1
+1-2 hours        17
+10-12 hours      12
+100-120 hours     9
+1000+ hours       5
+12-15 hours      15
+120-150 hours     3
+15-20 hours      31
+150-200 hours    19
+2-3 hours        11
+20-25 hours      36
+200-300 hours     7
+25-30 hours      30
+3-4 hours        11
+30-35 hours      10
+300-500 hours     3
+35-40 hours       4
+4-5 hours         7
+40-50 hours      39
+5-6 hours         5
+50-60 hours      24
+500-750 hours     1
+6-8 hours        20
+60-80 hours      42
+8-10 hours       27
+80-100 hours     31
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>For easier for analysis later, I added a column that take the mean of time frames in time column, except the “1000+ hours” data, which will be maintained as 1000.</p>
+<div id="f9bfce5c" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the words "hours" in new column</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>game_new[<span class="st">'time_num'</span>] <span class="op">=</span> game_new[<span class="st">'TIME'</span>].<span class="bu">str</span>.replace(<span class="vs">r' hours</span><span class="cf">|</span><span class="vs">hour'</span>,<span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># define a function</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> time_convert(value):</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="bu">str</span>(value)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"+"</span> <span class="kw">in</span> value:</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       x <span class="op">=</span> value.replace(<span class="st">"+"</span>,<span class="st">""</span>) <span class="co"># remove "+" for "1000+" cases</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       <span class="cf">return</span> np.int64(x) <span class="co"># change data type</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> value.split(<span class="st">"-"</span>) <span class="co"># from "40-60" to ["40","60"]</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        num <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">float</span>,x)) <span class="co"># map func float to each value and change to list</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(num) <span class="co"># calculate the mean</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># apply function for each row in new column</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>game_new[<span class="st">'time_num'</span>] <span class="op">=</span> game_new[<span class="st">'time_num'</span>].<span class="bu">apply</span>(time_convert)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># compare 2 columns (categorical vs numeric data)</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(game_new[[<span class="st">'TIME'</span>,<span class="st">'time_num'</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              TIME  time_num
+0    100-120 hours     110.0
+1     80-100 hours      90.0
+2      50-60 hours      55.0
+3    150-200 hours     175.0
+4      12-15 hours      13.5
+..             ...       ...
+450    15-20 hours      17.5
+451            NaN       NaN
+452            NaN       NaN
+453            NaN       NaN
+454            NaN       NaN
+
+[455 rows x 2 columns]</code></pre>
+</div>
+</div>
+<p><strong>Deal with Na values</strong></p>
+<div id="8512069e" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect Na in each column</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> game_new.isnull().<span class="bu">sum</span>().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>fourth_genre        450
+third_genre         105
+TIME                 34
+time_num             34
+RATIO                 3
+RATING                3
+second_genre          3
+GENRES                2
+Main_Genre            2
+name_genre_match      2
+ADDED                 1
+GAME                  0
+GAMERS                0
+COMP %                0
+True_Achievement      0
+Game_Score            0
+dtype: int64</code></pre>
+</div>
+</div>
+<p>Even though fourth and third genre column have the most na values among other variables, I did not process those variables, instead, I chose to eliminate these colomns since it’s not highly essential for the analysis target.</p>
+<div id="f0d65447" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove fourth and third genre column</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>game_new <span class="op">=</span> game_new.drop([<span class="st">'fourth_genre'</span>,<span class="st">'third_genre'</span>], axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># eliminate assigned coloumns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>Handle Na values</strong></p>
+<ul>
+<li>With categorical data such as <code>TIME</code>, <code>second_genre</code>, <code>GENRES</code>, <code>Main_Genre</code>, <code>name_genre_match</code>, and <code>ADDED</code> (Time data), I used <em>mode</em> method to fill those Na values</li>
+<li>With continuos data such as <code>RATIO</code>, <code>RATING</code>, and <code>time_num</code>, I used <em>mean</em> method to fill those values.</li>
+</ul>
+<div id="95152ad9" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fill Na values of categorical and text data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cate_cols <span class="op">=</span> [<span class="st">'TIME'</span>,<span class="st">'second_genre'</span>,<span class="st">'GENRES'</span>,<span class="st">'Main_Genre'</span>, <span class="st">'name_genre_match'</span>,<span class="st">'ADDED'</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create for loop for automatically repeat process</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cate_cols:</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    mode_val <span class="op">=</span> game_new[col].mode()[<span class="dv">0</span>]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    game_new[col] <span class="op">=</span> game_new[col].fillna(mode_val)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="bb40838c" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fill Na values of numeric data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">'RATIO'</span>,<span class="st">'RATING'</span>,<span class="st">'time_num'</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create for loop for automatically repeat process</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    mean_val <span class="op">=</span> np.mean(game_new[col])</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    game_new[col] <span class="op">=</span> game_new[col].fillna(mean_val)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="83e4383a" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check Na again</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> game_new.isnull().<span class="bu">sum</span>().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>GAME                0
+RATIO               0
+GAMERS              0
+COMP %              0
+TIME                0
+RATING              0
+ADDED               0
+True_Achievement    0
+Game_Score          0
+GENRES              0
+Main_Genre          0
+second_genre        0
+name_genre_match    0
+time_num            0
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="genre-analysis" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Genre analysis</h1>
+<p>In this section, I want to determine what are genres that gamers prefer most compared to the others. From that, finding features of those popular games to have a transparent model about a successful game, which enhances developing strategies for game developers in Xbox pass product.</p>
+<div id="eef3bbdf" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>game_new.info() <span class="co"># recall the structure and columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="57c12e35" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>genre_ana <span class="op">=</span> game_new.groupby(<span class="st">'Main_Genre'</span>, observed<span class="op">=</span><span class="va">True</span>).agg(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    gamer <span class="op">=</span> pd.NamedAgg(column <span class="op">=</span> <span class="st">"GAMERS"</span>, aggfunc<span class="op">=</span> <span class="st">"mean"</span>),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    rating <span class="op">=</span> pd.NamedAgg(column <span class="op">=</span> <span class="st">"RATING"</span>, aggfunc<span class="op">=</span> <span class="st">"mean"</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    comp_ratio <span class="op">=</span> pd.NamedAgg(column <span class="op">=</span> <span class="st">"COMP %"</span>, aggfunc<span class="op">=</span> <span class="st">"mean"</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    play_time <span class="op">=</span> pd.NamedAgg(column<span class="op">=</span> <span class="st">"time_num"</span>, aggfunc <span class="op">=</span> <span class="st">"mean"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">2</span>).sort_values(by<span class="op">=</span><span class="st">'gamer'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>genre_ana</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-visualize-the-number-of-gamers-of-each-genre" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize the number of gamers of each genre</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">5</span>))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> sns.barplot(genre_ana, x<span class="op">=</span><span class="st">"gamer"</span>, y<span class="op">=</span><span class="st">"Main_Genre"</span>, orient<span class="op">=</span><span class="st">"y"</span>, order <span class="op">=</span> genre_ana.index)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>f1.set_title(<span class="st">"Ranking gamers of each genre"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>f1.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>f1.set_xlabel(<span class="st">"Gamer numbers"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/visualize-the-number-of-gamers-of-each-genre-output-1.png" id="visualize-the-number-of-gamers-of-each-genre" width="727" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="initial-analysis" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="initial-analysis"><span class="header-section-number">4.0.1</span> Initial analysis</h3>
+<p>Overall, it can be seen that Sandbox, Compilation and MMO are 3 genres played most by gamers, while Rhythm, Roguelike, and Strategy are least chosen. Specially, when comparing rating of the top 3 games and the least game, there are insignificant difference among those games. However, the main difference lies in the completion ratio and play time. Specifically, the most genre played (sandbox) have the high completion ratio with short play time, which is similar to least games played. In contrast, the following genres (Compilation and MMO) have the low completion percentage with long play time.</p>
+<p>Thus, I dived into these differences among top ranked genres by using bubble chart, which shows the relationship between gamers, completion ratio, and playing duration.</p>
+<div id="cell-Bubble-chart" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a bubble chart</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> genre_ana,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                     y <span class="op">=</span> <span class="st">"gamer"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                     x <span class="op">=</span> <span class="st">"play_time"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                     size <span class="op">=</span> <span class="st">"comp_ratio"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                     hue<span class="op">=</span><span class="st">"comp_ratio"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                     sizes<span class="op">=</span>(<span class="dv">100</span>,<span class="dv">2000</span>),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                     palette<span class="op">=</span><span class="st">"coolwarm"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># set the legend for each genre in chart</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> genre <span class="kw">in</span> genre_ana.index:</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    plt.text(x <span class="op">=</span> genre_ana.loc[genre,<span class="st">'play_time'</span>] <span class="op">+</span> <span class="dv">10</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>             y <span class="op">=</span> genre_ana.loc[genre, <span class="st">'gamer'</span>] <span class="op">-</span> <span class="dv">100</span>,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>             s <span class="op">=</span> genre,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>             fontdict<span class="op">=</span> <span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">10</span>))</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># set title and legend</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"The relationship between gamer and playing duration"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Play duration"</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Gamer"</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/bubble-chart-output-1.png" id="bubble-chart" width="852" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="insight" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="insight"><span class="header-section-number">4.0.2</span> Insight</h3>
+<p>Our analysis reveals that popular game genres on Xbox Game Pass achieve success through two distinct models: <strong>building a high-engagement community</strong> and <strong>attracting a mass-appeal audience.</strong></p>
+<ul>
+<li><p>The High-Engagement Model (MMO &amp; Compilation): These genres have large number of players with long gaming duration. In other words, with these genres, gamers tend to invest more time in experiencing and exploring games. Moreover, with MMO, a genre whose game focuses on online multiple player, it also strengthens to the fact that people love player connection experience, which makes them spend more time in gaming. Meanwhile, Compilation genre concentrates on experiencing a game with extended versions or stories, which arouses the curiorsity of gamers to make them spend more time in games.</p></li>
+<li><p>The Mass-Appeal Model (Sandbox): This genre appriciates the creativity of players instead of building complex stories inside. In contrast to long average playtime as MMO and Compilation, Sandbox though has a short playing duration, it still obtains advocates from gamers thanks for its emphasize on freedom, creativity, and accessible gameplay. This suggests that games prioritizing freedom and creativity are highly effective in appealing to a wider, more general audience compared to other gameplay styles.</p></li>
+</ul>
+<p><strong>Conclusion &amp; Recommendation:</strong> Notably, <strong>completion ratio</strong> is not a primary driver of popularity for these top-tier genres. Success is determined by the mode of engagement—either deep retention or broad appeal. Consequently, Xbox game developers should focus on crafting innovative gameplay experiences and investing in multiplayer enhancements. This dual approach can help sustain a loyal gaming community while also attracting new players with fresh game offerings.</p>
+</section>
+</section>
+<section id="difficulty-and-playtime-analysis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Difficulty and Playtime Analysis</h1>
+<p>In this part, I want to focus on the gaming experience of gamers, particularly in the achievement difficulty of genres compared to true score from players. Therefore, I used <code>RATIO</code> and <code>time_num</code> columns to inspect this problem.</p>
+<div id="0d807952" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># recall the data information</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>game_new.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="c7274755" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">5</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data <span class="op">=</span> game_new, y<span class="op">=</span><span class="st">"RATIO"</span>, x<span class="op">=</span><span class="st">"time_num"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"The relationship between play time and Ratio (Difficulty)"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Playtime"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Ratio (Difficulty)"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">'log'</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/cell-21-output-1.png" width="814" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Brief decription</strong></p>
+<p>In the code above, since values are distributed mostly around low play time and ratio, with a few of long play time and high ratio data. Thus, I transfered two variables to logarit to expand data in low range and narrow the data in high range.</p>
+<section id="apply-k-means-clusterring-for-better-classification" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="apply-k-means-clusterring-for-better-classification"><span class="header-section-number">5.0.1</span> Apply K-means clusterring for better classification</h3>
+<p>From the scatter plot, it can be seen that games may be divided into clusters with different features, instead of having a linear relationship. However, common observation is objective, which is consequently essential to have an unsupervised machine learning, k-means clustering. The final target is to determine whether the model can classify these clusters as innitally predicted or not.</p>
+<div id="bb2c744b" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import model </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="850c0472" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract and standardize variables for model</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>km_va <span class="op">=</span> game_new[[<span class="st">'RATIO'</span>,<span class="st">'time_num'</span>]]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>km_scaled <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    scaler.fit_transform(km_va), <span class="co"># data scaled (numpy array)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> km_va.columns</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="ed032c09" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run k-means model with cross validation</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>inertia <span class="op">=</span> []</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">11</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> K:</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    k_mdl <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k, n_init<span class="op">=</span><span class="dv">20</span>, max_iter<span class="op">=</span> <span class="dv">100</span>, random_state<span class="op">=</span> <span class="dv">42</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    k_mdl.fit(km_scaled)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    inertia.append(k_mdl.inertia_)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross validation plot</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>plt.plot(K,inertia, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"K clusters"</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Error"</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Cross validation plot"</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/cell-24-output-1.png" width="593" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Optimal km mean cluster</strong></p>
+<p>From the plot above, k cluster at point 4 shows the kink of error. Following the “elbow method”, I choose 4 as an optimal k cluster for the model.</p>
+<div id="4a263fbb" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run again the model</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>km_mdl <span class="op">=</span> KMeans(n_clusters <span class="op">=</span> <span class="dv">4</span>, n_init<span class="op">=</span><span class="dv">20</span>, max_iter<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>mdl_fit <span class="op">=</span> km_mdl.fit(km_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cell-scatter-plot-colored-by-cluster" class="cell" data-execution_count="25">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add a column containing labels of cluster</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>km_va[<span class="st">'cluster'</span>] <span class="op">=</span> mdl_fit.labels_</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize scatter plot using logarit, and coloring data point by cluster label</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span> (<span class="dv">10</span>,<span class="dv">7</span>))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data <span class="op">=</span> km_va,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                y<span class="op">=</span> <span class="st">'RATIO'</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                x<span class="op">=</span> <span class="st">'time_num'</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster'</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                palette<span class="op">=</span><span class="st">'viridis'</span>, s<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">"log"</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Playtime"</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Ratio (Difficulty)"</span>)</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Ratio and play time relationship clustered by labels"</span>)</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/scatter-plot-colored-by-cluster-output-1.png" id="scatter-plot-colored-by-cluster" width="814" height="599" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="07d9e421" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the mean of RATIO and time_num by clusters</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>summary_km <span class="op">=</span> km_va.groupby(<span class="st">'cluster'</span>).agg(RATIO <span class="op">=</span> pd.NamedAgg(column<span class="op">=</span><span class="st">"RATIO"</span>, aggfunc<span class="op">=</span> <span class="st">"mean"</span>),</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                             time_num <span class="op">=</span> pd.NamedAgg(column<span class="op">=</span><span class="st">"time_num"</span>,aggfunc<span class="op">=</span><span class="st">"mean"</span>)).<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>summary_km</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">RATIO</th>
+<th data-quarto-table-cell-role="th">time_num</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">cluster</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2.56</td>
+<td>31.29</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>6.76</td>
+<td>937.50</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>15.60</td>
+<td>59.08</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>5.69</td>
+<td>107.01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<p>Table of difficulty (ratio) mean and time_num mean by clusters</p>
+</div>
+</div>
+</section>
+<section id="analysis" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">5.0.2</span> Analysis</h3>
+<p>Based on the scatter plot colored by clusters and summary of RATIO and play time mean by clusters, the data points are divided into 4 clusters with clear features</p>
+<ul>
+<li>Cluster 0 (Easy - short): Casual games, conveniently entertaining for common players.</li>
+<li>Cluster 1 (Hard - very long): Triple A games, require players to invest in playing time for exploring sufficient games.</li>
+<li>Cluster 2 (Very Hard - short): Intelligence concentration, which is suitable for players who does not have much time.</li>
+<li>Cluster 3 (Hard - Long): Long-term games, which make gamers spend long time to play for understanding gameplays.</li>
+</ul>
+</section>
+<section id="extended-problem" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="extended-problem"><span class="header-section-number">5.1</span> Extended problem</h2>
+<p>From the genre analysis and this result, I have raised a question that even though players in Xbox game pass prefer high-engagement and mass appeal gameplays, what genres do gamers prefer to play within these 4 features?</p>
+<div id="39f47ed3" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the cluster into the game_new df</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>joined_df <span class="op">=</span> game_new.join(km_va[<span class="st">'cluster'</span>])</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add name for clusters</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>cluster_name <span class="op">=</span> {</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: <span class="st">'Casual (easy-short)'</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: <span class="st">'Epic (hard-very long)'</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>: <span class="st">'Challenge (very hard-short)'</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>: <span class="st">'Mainstream (hard-long)'</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># map the name with corresponding cluster in df</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>joined_df[<span class="st">'Cluster name'</span>] <span class="op">=</span> joined_df[<span class="st">'cluster'</span>].<span class="bu">map</span>(cluster_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="summary-table" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a summary table calculating count of games and sum of gamers by cluster and genre</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>filter_df <span class="op">=</span> joined_df.groupby([<span class="st">'Cluster name'</span>,<span class="st">'Main_Genre'</span>]).agg(</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    current_genres <span class="op">=</span> (<span class="st">'GAME'</span>,<span class="st">'count'</span>),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    current_player <span class="op">=</span> (<span class="st">'GAMERS'</span>,<span class="st">'sum'</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    ).sort_values(by <span class="op">=</span>[<span class="st">'Cluster name'</span>,<span class="st">'current_genres'</span>,<span class="st">'current_player'</span>],</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                                ascending<span class="op">=</span>[<span class="va">True</span>,<span class="va">False</span>,<span class="va">False</span>])</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>filter_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="sum-by-cluster" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sum of genre and player separately by each cluster</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>total_genre_cluster <span class="op">=</span> filter_df.groupby(<span class="st">'Cluster name'</span>)[<span class="st">'current_genres'</span>].transform(<span class="st">'sum'</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>total_player_cluster <span class="op">=</span> filter_df.groupby(<span class="st">'Cluster name'</span>)[<span class="st">'current_player'</span>].transform(<span class="st">'sum'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="calculate-percent-of-each-genre-in-a-cluster" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate proportion of each genre in each cluster</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>filter_df[<span class="st">'percent genre'</span>] <span class="op">=</span> (filter_df[<span class="st">'current_genres'</span>]<span class="op">/</span>total_genre_cluster)<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>filter_df[<span class="st">'percent player'</span>] <span class="op">=</span> (filter_df[<span class="st">'current_player'</span>]<span class="op">/</span>total_player_cluster)<span class="op">*</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="reset-index-and-call-unique-values" class="cell" data-execution_count="31">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>filter_df <span class="op">=</span> filter_df.reset_index()</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>clus_name <span class="op">=</span> filter_df[<span class="st">'Cluster name'</span>].unique()</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>clus_name</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="define-a-function-for-plotting" class="cell" data-fig-dpi="200" data-fig-height="4" data-fig-width="10" data-execution_count="32">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a function for plotting cluster data</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rank_plot(cluster):</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    clus_df <span class="op">=</span> filter_df[filter_df[<span class="st">'Cluster name'</span>]<span class="op">==</span> cluster].copy()</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prepare data for ploting</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># top 5 (percent genre)</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    top5_per_genre <span class="op">=</span> clus_df.nlargest(<span class="dv">5</span>, <span class="st">'percent genre'</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># top 5 (percent player)</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    top5_per_player <span class="op">=</span> clus_df.nlargest(<span class="dv">5</span>,<span class="st">'percent player'</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># combine two top filtered into a single df</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    combine_top5 <span class="op">=</span> pd.concat([top5_per_genre,top5_per_player])</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># remove duplicates row from two top5 tables</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    combine_top5 <span class="op">=</span> combine_top5.drop_duplicates(subset<span class="op">=</span> <span class="st">"Main_Genre"</span>).sort_values(by <span class="op">=</span> <span class="st">"percent genre"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot bar plot</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> combine_top5[<span class="st">'Main_Genre'</span>].head(<span class="dv">5</span>)</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    percent_genre_vals <span class="op">=</span> combine_top5[<span class="st">'percent genre'</span>].nlargest(<span class="dv">5</span>)</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    percent_player_vals <span class="op">=</span> combine_top5[<span class="st">'percent player'</span>].nlargest(<span class="dv">5</span>)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set up axis and plot</span></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.arange(<span class="bu">len</span>(labels))</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="fl">0.35</span></span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> [<span class="st">"#DD0303"</span>,<span class="st">"#FA812F"</span>,<span class="st">"#FAB12F"</span>,<span class="st">"#dbc732ff"</span>,<span class="st">"#d1d466ff"</span>] <span class="co"># take color palette</span></span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(labels):</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create bars on axis</span></span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>        bar1 <span class="op">=</span> ax.barh(y[i] <span class="op">-</span> height<span class="op">/</span><span class="dv">2</span>, percent_genre_vals.iloc[i], height, color <span class="op">=</span>colors[i], alpha <span class="op">=</span> <span class="fl">0.4</span>)</span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>        bar2 <span class="op">=</span> ax.barh(y[i] <span class="op">+</span> height<span class="op">/</span><span class="dv">2</span>, percent_player_vals.iloc[i], height, color <span class="op">=</span> colors[i], alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add labels</span></span>
+<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>        ax.bar_label(bar1, padding<span class="op">=</span><span class="dv">3</span>, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>,fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>        ax.bar_label(bar2, padding<span class="op">=</span><span class="dv">3</span>, fmt<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>,fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set custom legend</span></span>
+<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a>    genre_patch <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">'gray'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, label<span class="op">=</span><span class="st">'Genre (%)'</span>)</span>
+<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>    player_patch <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">'gray'</span>, alpha<span class="op">=</span><span class="fl">1.0</span>, label<span class="op">=</span><span class="st">'Player (%)'</span>)</span>
+<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>    ax.legend(handles<span class="op">=</span>[genre_patch, player_patch])</span>
+<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># custom plot design</span></span>
+<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'</span><span class="sc">{</span>cluster<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">25</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Proportion (%)'</span>,fontsize<span class="op">=</span><span class="dv">18</span>,fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks(y)</span>
+<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>    ax.set_yticklabels(labels, rotation<span class="op">=</span><span class="dv">40</span>, ha<span class="op">=</span><span class="st">"right"</span>,fontsize<span class="op">=</span><span class="dv">18</span>,fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>    ax.invert_yaxis()</span>
+<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a>    ax.grid(<span class="va">True</span>,color<span class="op">=</span><span class="st">"#D3D3D3"</span>)</span>
+<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>    ax.set_axisbelow(<span class="va">True</span>)  </span>
+<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>    fig.tight_layout() </span>
+<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>Comparison of games distribution on Xbox with the actual player demand across different gameplay</strong></p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a plot of 4 clusters</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>rank_plot(<span class="st">"Casual (easy-short)"</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>rank_plot(<span class="st">"Challenge (very hard-short)"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>rank_plot(<span class="st">'Epic (hard-very long)'</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>rank_plot(<span class="st">'Mainstream (hard-long)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="using-func-to-plot-data" class="cell quarto-layout-panel" data-fig-width="12" data-fig-height="4" data-fig-dpi="200" data-execution_count="33" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/using-func-to-plot-data-output-1.png" id="using-func-to-plot-data-1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="1328"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/using-func-to-plot-data-output-2.png" id="using-func-to-plot-data-2" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="1328"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/using-func-to-plot-data-output-3.png" id="using-func-to-plot-data-3" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="1328"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Xbox%20Game%20Project%20-%20Portfolio_files/figure-html/using-func-to-plot-data-output-4.png" id="using-func-to-plot-data-4" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" width="1328"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="insight-1" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="insight-1"><span class="header-section-number">5.2</span> Insight</h2>
+<p>A deeper comparison of genre game share vs player share across gameplay groups surfaces both opportunities and inefficiencies for Xbox’s portfolio. In short, we can see where genres face a supply gap (player demand &gt; game supply) and where resources may be over-allocated (game supply &gt; player demand).</p>
+<p>Overall, Action, Adventure, and Simulation appear across most groups, showing a strong developer focus—though the efficiency of that focus varies by group.</p>
+<section id="group-casual-easy---short-playtime-demand-remains-unmet" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="group-casual-easy---short-playtime-demand-remains-unmet"><span class="header-section-number">5.2.1</span> Group: Casual (Easy - Short playtime): Demand remains unmet</h3>
+<p>In this group, Action and Adventure clearly show a big gap between player demand and game distribution proportion.</p>
+<ul>
+<li><p>Action: Accounting for 52.8% of players but only 43.2% of games distributed in this genre, which leaves remarkable potential that is not leveraged efficiently.</p></li>
+<li><p>Adventure: A larger difference between game supply and real demand compared to Action. It attracts 20.7% of players but only has 12.7% of games. This is also an opportunity for game developers to introduce more Adventure Casual games.</p></li>
+<li><p>In contrast, other genres, such as RPG, Racing, and Sports, are distributed reasonably with similar game and player percentages.</p></li>
+</ul>
+</section>
+<section id="group-challenge-very-hard---short-playtime-balanced-but-some-waste." class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="group-challenge-very-hard---short-playtime-balanced-but-some-waste."><span class="header-section-number">5.2.2</span> Group: Challenge (Very Hard - Short playtime): Balanced, but some waste.</h3>
+<p>This group demonstrates a productive balance between the proportion of games launched and player preferences. The difference between genre (%) and player (%) is negligible, indicating that developers are doing well in meeting the tastes of players who enjoy challenges. However, there are still genres that are leveraged inefficiently.</p>
+<ul>
+<li><p><strong>Simulation and Action:</strong> Have the best balance between games released and real player demand.</p></li>
+<li><p><strong>Strategy</strong>: Resources for Strategy game development are redundant when the number of games introduced exceeds the real demand of users.</p></li>
+<li><p><strong>Adventure and Racing</strong>: They attract 17.1% and 9.6% of players, respectively, but have a low proportion of games launched. The real potential of these genres is not employed productively, which is a chance to retain old players and attract new subscribers.</p></li>
+</ul>
+</section>
+<section id="group-epic-hard---very-long-playtime-a-potential-opportunity-is-missing" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="group-epic-hard---very-long-playtime-a-potential-opportunity-is-missing"><span class="header-section-number">5.2.3</span> Group: Epic (Hard - Very long playtime): A potential opportunity is missing</h3>
+<p>In addition to a balance in Adventure, other genres are losing their development potential.</p>
+<ul>
+<li><p><strong>Action:</strong> This genre dominates with nearly 50% of players, yet only accounts for 33.3% of games in this group. In other words, this is a “gold mine” that developers should focus more on, as Epic players show a high attraction to this genre.</p></li>
+<li><p><strong>MMO and Simulation:</strong> MMO and Simulation appear to be overrepresented: their supply (33.3% and 16.7%) far exceeds actual player demand (24.7% and 6.6%). This suggests that resources may currently be allocated inefficiently.</p></li>
+</ul>
+</section>
+<section id="group-mainstream-hard---long-playtime-optimizing-portfolio-is-essential" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="group-mainstream-hard---long-playtime-optimizing-portfolio-is-essential"><span class="header-section-number">5.2.4</span> Group: Mainstream (Hard - Long playtime): Optimizing portfolio is essential</h3>
+<p>Similar to the Epic group, Action in Mainstream has not yet reached its full potential, with 54.7% of players, yet 35% of games on the platform.</p>
+<ul>
+<li><p><strong>Sports and Strategy</strong>: These genres show a sign of oversupply, as their game percentage is significantly higher than the share of players.</p></li>
+<li><p><strong>Simulation and RPG</strong>: Maintain a good balance, indicating stability within this segment.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<p>In conclusion, the main factors leveraging the success of gamer attraction on Xbox Game Pass are mass appeal (Sandbox) and high engagement (MMO and Compilation). Furthermore, deeper analysis using machine learning has also contributed significantly by identifying four main game types, ranging from Casual (quick entertainment) to Epic (hardcore, immersive experiences). Therefore, the key elements determining the success of a game do not solely depend on its genre, but also on the combination between genre and the experience it delivers to players (difficulty and playtime). Notably, completion ratio, as revealed through analysis, has shown that it is not a vital factor for popularity.</p>
+<section id="recommendation" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="recommendation"><span class="header-section-number">6.1</span> Recommendation</h2>
+<p>Based on the analysis, I propose a two-tiered strategic approach for developers to optimize their portfolio on Xbox Game Pass:</p>
+<ol type="1">
+<li>Strategic Focus Based on Market Goals:</li>
+</ol>
+<ul>
+<li><p>For Mass-Market Appeal: Developers should prioritize games that emphasize freedom, creativity, and accessibility. Sandbox games are a prime example of this successful model, capable of attracting a broad and diverse player base.</p></li>
+<li><p>For Building a Loyal Community: The focus should shift towards titles with profound narratives, long-term content roadmaps, and engaging hardcore gameplay. RPGs and MMOs are ideal for this purpose, fostering high player retention and strong community engagement.</p></li>
+</ul>
+<ol start="2" type="1">
+<li>Tactical Genre Allocation within Gameplay Clusters:</li>
+</ol>
+<p>To maximize player satisfaction, developers must strategically align genre distribution with the distinct player expectations of each gameplay cluster (difficulty and playtime).</p>
+<ul>
+<li><p>Prioritize High-Demand Genres: In both the Epic (Hard - Very Long) and Mainstream (Hard - Long) clusters, there is a significant, untapped demand for Action games. I strongly recommend prioritizing investment in this genre, as it currently has the highest player engagement but remains critically under-supplied.</p></li>
+<li><p>Reallocate Resources from Saturated Genres: The development of additional MMO and Simulation games within the Epic cluster should be carefully reconsidered. Data indicates that these genres are over-supplied relative to player demand. These resources could be more effectively reallocated to the Action genre or used to explore other emerging, high-potential genres.</p></li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
